@@ -22,13 +22,17 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
+const cors = require("cors");
+
 app.use(
-	cors({
-		origin:["http://localhost:3000","https://study-notion-rohit-ag.vercel.app/"]
-		,
-		credentials:true,
-	})
-)
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://study-notion-rohit-ag.vercel.app/"  
+    ],
+    credentials: true,
+  })
+);
 
 app.use(
 	fileUpload({
