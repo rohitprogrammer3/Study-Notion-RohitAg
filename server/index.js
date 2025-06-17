@@ -42,6 +42,8 @@ app.use(
     tempFileDir: "/tmp",
   })
 );
+app.options("*", cors());
+
 
 // Cloudinary connection
 cloudinaryConnect();
