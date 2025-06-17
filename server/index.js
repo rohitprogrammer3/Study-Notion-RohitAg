@@ -15,7 +15,7 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 10000;
 
 //database connect
 database.connect();
@@ -24,7 +24,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"http://localhost:3000",
+		origin:["http://localhost:3000","https://study-notion-rohit-ag.vercel.app/"]
+		,
 		credentials:true,
 	})
 )
