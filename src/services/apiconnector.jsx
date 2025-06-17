@@ -1,6 +1,10 @@
 import axios from "axios"
 
-export const axiosInstance = axios.create({});
+
+const axiosInstance = axios.create({
+  baseURL: "https://study-notion-rohitag-1.onrender.com/api/v1",
+  withCredentials: true,  // ✅ Important for cookies/auth
+});
 
 
 export const apiConnector = (method, url, bodyData, headers, params) => {
