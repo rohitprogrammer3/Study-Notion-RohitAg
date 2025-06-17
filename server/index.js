@@ -63,7 +63,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(10000, () => {
+app.listen(PORT, () => {
   console.log(`App is running at ${PORT}`);
 });
 
