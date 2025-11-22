@@ -1,3 +1,4 @@
+
 const nodemailer = require("nodemailer");
 
 const mailSender = async (email, title, body) => {
@@ -5,10 +6,13 @@ const mailSender = async (email, title, body) => {
     const transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,      // smtp-relay.brevo.com
       port: parseInt(process.env.MAIL_PORT), // 587
-      secure: false,                    // REQUIRED for Brevo
+      secure: false,
       auth: {
-        user: process.env.MAIL_USER,    // 9c3b0d001@smtp-brevo.com
-        pass: process.env.MAIL_PASS,    // your smtp key
+        user: process.env.MAIL_USER,    // your brevo smtp login
+        pass: process.env.MAIL_PASS,    // your brevo smtp key
+      },
+      tls: {
+        rejectUnauthorized: false       // IMPORTANT for Render + Brevo
       },
     });
 
@@ -28,3 +32,4 @@ const mailSender = async (email, title, body) => {
 };
 
 module.exports = mailSender;
+
