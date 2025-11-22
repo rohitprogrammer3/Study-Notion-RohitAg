@@ -1,34 +1,43 @@
-// mailSender.js
-const SibApiV3Sdk = require('@getbrevo/brevo');
+// server/utils/mailSender.js
 require('dotenv').config();
 
 const mailSender = async (email, title, body) => {
-try {
-const client = SibApiV3Sdk.ApiClient.instance;
-const apiKey = client.authentications['api-key'];
-apiKey.apiKey = process.env.BREVO_API_KEY;
+  try {
+    if (!process.env.BREVO_API_KEY) {
+      throw new Error('Missing BREVO_API_KEY in environment');
+    }
 
-```
-const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
+    const payload = {
+      sender: { name: 'StudyNotion', email: 'arohitagarwal633@gmail.com' },
+      to: [{ email }],
+      subject: title,
+      htmlContent: body
+    };
 
-const response = await emailApi.sendTransacEmail({
-  sender: {
-    name: "StudyNotion",
-    email: "arohitagarwal633@gmail.com",
-  },
-  to: [{ email }],
-  subject: title,
-  htmlContent: body,
-});
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': process.env.BREVO_API_KEY
+      },
+      body: JSON.stringify(payload),
+      // optional: set a timeout using AbortController if you want
+    });
 
-console.log("Email sent via Brevo:", response);
-return response;
-```
+    const json = await res.json().catch(() => ({}));
 
-} catch (error) {
-console.error("Brevo error:", error);
-return error;
-}
+    if (!res.ok) {
+      // Log full error for debugging
+      console.error('Brevo API error:', res.status, json);
+      throw new Error(`Brevo API ${res.status}: ${JSON.stringify(json)}`);
+    }
+
+    console.log('Email sent via Brevo:', json);
+    return json;
+  } catch (error) {
+    console.error('Brevo error:', error);
+    return error;
+  }
 };
 
 module.exports = mailSender;
