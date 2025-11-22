@@ -8,7 +8,7 @@ const mailSender = async (email, title, body) => {
     }
 
     const payload = {
-      sender: { name: 'StudyNotion', email: 'arohitagarwal633@gmail.com' },
+      sender: { name: 'StudyNotion', email: 'rohitagarwalnit@gmail.com' },
       to: [{ email }],
       subject: title,
       htmlContent: body
