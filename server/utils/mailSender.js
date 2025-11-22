@@ -1,5 +1,6 @@
 // mailSender.js
-import SibApiV3Sdk from '@getbrevo/brevo';
+const SibApiV3Sdk = require('@getbrevo/brevo');
+require('dotenv').config();
 
 const mailSender = async (email, title, body) => {
 try {
@@ -13,7 +14,7 @@ const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 const response = await emailApi.sendTransacEmail({
   sender: {
     name: "StudyNotion",
-    email: "arohitagarwal633@gmail.com", 
+    email: "arohitagarwal633@gmail.com",
   },
   to: [{ email }],
   subject: title,
@@ -31,4 +32,5 @@ return error;
 };
 
 module.exports = mailSender;
+
 
